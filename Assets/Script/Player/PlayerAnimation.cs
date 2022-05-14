@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerAnimations : MonoBehaviour
+public class PlayerAnimation : MonoBehaviour
 {
     public float stickLerpTime;
     public float aimLerpTime;
@@ -72,6 +72,7 @@ public class PlayerAnimations : MonoBehaviour
             var currentLerpTime = Time.time - startTime;
             var lerpFactor = currentLerpTime / stickLerpTime;
             computedStickDirection = Vector2.Lerp(startStick, realStickDirection, lerpFactor);
+            Debug.Log("ok");
             yield return null;
         }
     }
