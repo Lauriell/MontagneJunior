@@ -8,7 +8,7 @@ public class Teleport : MonoBehaviour
     // Prefab du canvas de loadingScreen avec l’animator d’attaché
     public Animator loadingScreen;
 
-    public GameObject player;
+    private GameObject player;
     // Le component attaché à la main camera quand on utilise cinemachine
     private CinemachineBrain cameraBrain;
 
@@ -31,7 +31,6 @@ public class Teleport : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         StartCoroutine(TeleportCoroutine());
-        player.transform.position = endPoint.transform.position;
     }
 
     private IEnumerator TeleportCoroutine()
@@ -56,9 +55,10 @@ public class Teleport : MonoBehaviour
         // On téléporte la caméra virtuelle active en lui spécifiant que c’est l’avatar qui se téléporte 
         // Ainsi que le vecteur représentant le trajet parcouru
         activeCamera.OnTargetObjectWarped(player.transform, teleportDelta);
-
         // On téléporte notre avatar
-        loadingAnimator.SetTrigger("Disappear");
+        player.transform.position = endPoint.position;
+        // On oriente l’avatar dans la direction du point de téléportation pour pas regarder le mur après le déplacement
+        player.transform.rotation = endPoint.rotation;
         // On lance l’animation de disparition de l’écran de chargement
         loadingAnimator.SetTrigger("Disappear");
     }
